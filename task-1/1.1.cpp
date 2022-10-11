@@ -4,35 +4,23 @@
 using namespace std;
 
 /**
-*\brief Точка входа в программу
-*\param x
-*\param y
-*\param z
-\return Возвращает 0 случае успеха
+ * \brief 
+ * \param x 
+ * \param y 
+ * \param z
 */
-
-/**
-*\brief Точка входа в программу
-*\param x
-*\param y
-*\param z
-\return Возвращает 0 случае успеха
-*/
-const double getA(double x, double y, double z)
-{
-	return sqrt((x * x) + y) - (y * y) * sin((x + z) / x) * sin((x + z) / x) * sin((x + z) / x);
-}
+const double getA(const double x, double y, double z);
 
 const double getB(double x, double y, double z)
 {
-	return cos(x * x * x) * cos(x * x * x) - x / ((z * z) + (y * y));
+	return sqrt(pow(x, 2)+y)-pow(y, 2)*(sin((x +z)/x)*sin((x+z)/x)*sin((x+z)/x));
 }
 
 int main()
 {
-	const double x = -2.9;
-	const double y = 15.5;
-	const double z = 1.5;
+	const double x = 0.61;
+	const double y = 0.9;
+	const double z = 0.3;
 
 	cout << " x = " << x << " y = " << y << " z = " << z << endl;
 
@@ -41,4 +29,9 @@ int main()
 	cout << " a = " << a << " b = " << b << endl;
 
 	return 0;
+}
+
+const double getA(const double x, double y, double z)
+{
+	return (pow(z,2 * x)+pow(y,-x)*cos(z+y)*x)/(x+1);
 }
