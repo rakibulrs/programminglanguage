@@ -4,35 +4,31 @@
 using namespace std;
 
 /**
-*\brief Точка входа в программу
-*\param x
-*\param y
-*\param z
-\return Возвращает 0 случае успеха
+ * \brief calculate function according to given formula.
+ * \param x first argument function .
+ * \param y second argument function .
+ * \param z third argument function .
+ * \return function value .
 */
+const double getA(const double x, const double y, const double z);
+/**
+ * \brief calculate function according to given formula.
+ * \param x first argument function .
+ * \param y second argument function .
+ * \param z third argument function .
+ * \return function value .
+*/
+const double getB(const double x, const double y, const double z);
 
 /**
-*\brief Точка входа в программу
-*\param x
-*\param y
-*\param z
-\return Возвращает 0 случае успеха
+*\brief entry point in progrram .
+*\return returne 0 if successful .
 */
-const double getA(double x, double y, double z)
-{
-	return sqrt((x * x) + y) - (y * y) * sin((x + z) / x) * sin((x + z) / x) * sin((x + z) / x);
-}
-
-const double getB(double x, double y, double z)
-{
-	return cos(x * x * x) * cos(x * x * x) - x / ((z * z) + (y * y));
-}
-
 int main()
 {
-	const double x = -2.9;
-	const double y = 15.5;
-	const double z = 1.5;
+	const double x = 0.61;
+	const double y = 0.9;
+	const double z = 0.3;
 
 	cout << " x = " << x << " y = " << y << " z = " << z << endl;
 
@@ -41,4 +37,13 @@ int main()
 	cout << " a = " << a << " b = " << b << endl;
 
 	return 0;
+}
+
+const double getA(const double x, const double y, const double z)
+{
+	return (pow(z,2 * x)+pow(y,-x)*cos(z+y)*x)/(x+1);
+}
+const double getB(const double x,const  double y,const double z)
+{
+	return sqrt(pow(x, 2)+y)-pow(y, 2)*(sin((x +z)/x)*sin((x+z)/x)*sin((x+z)/x));
 }
