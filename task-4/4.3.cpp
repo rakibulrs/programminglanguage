@@ -1,100 +1,141 @@
-#include <iostream>
-#include <ctime>
-#include <random>
+#include <bits/stdc++.h>
 using namespace std;
 
-size_t get_size(const string& massage );
+int** createArray(int n, int m){
+    int** a = 0;
+    a = new int*[n];
+    for(int i=0; i<n; i++){
+        a[i] = new int[m];
+    }
 
-int** getArray(const size_t rows, const size_t columns);
+    return a;
+}
 
-int** getUserArray(const size_t rows, const size_t columns);
+int** userArray(int n, int m){
+    int** a = createArray(n,m);
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            cin>>a[i][j];
+        }
+    }
 
-void printArray(int** array, const size_t rows, const size_t  columns);
+    return a;
+}
 
-enum class userInput
+int** randArray(int n, int m){
+    int **a = createArray(n,m);
+
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            a[i][j] = rand();
+        }
+    }
+
+    return a;
+}
+void printArray(int** arr, int n, int m)
 {
-    USER_INPUT,
-    RANDOM_INPUT
-};
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++)
+            cout<<arr[i][j]<<" ";
+        cout<<endl;
+    }
+    cout<<endl;
+}
+
+
+int** replaceThreeMultiples(int** arr, int n, int m)
+{
+    for(int i=0; i<n; i++)
+    {
+        for(int j=0; j<m; j++){
+            if(arr[i][j]%3 == 0 )
+                arr[i][j] = 0;
+        }
+    }
+
+    return arr;
+
+}
+
+int** deleteRows(int** arr, int n,int m)
+{
+
+   if(m<=3)
+    return arr;
+
+   int newRow = n;
+
+
+   for(int i=0; i<n; i++){
+
+    if(arr[i][1] > arr[i][m-2]){
+        newRow--;
+    }
+   }
+
+   int** a = createArray(newRow,m);
+   int k=0;
+   for(int i=0; i<n; i++){
+
+    if(arr[i][1] <= arr[i][m-2]){
+        for(int j=0; j<m; j++){
+            a[k][j] = arr[i][j];
+        }
+        k++;
+    }
+   }
+
+
+   return a;
+
+}
 
 int main()
 {
-    size_t rows =get_size("Enter the number of rows in the array: ");
 
-    size_t columns =  get_size("Enter the number of array columns: ");
+    int opt,n,m;
 
-cout << "\n";
-    cout << "Enter a number corresponding to your desire to populate the array:\n" << "\n"
-    << static_cast<int>(userInput::USER_INPUT) << " - you fill the array manually.\n"
-    << static_cast<int>(userInput::RANDOM_INPUT) << " - fills an array with random numbers.\n\n";
+    cout<<"Array Creation"<<endl;
+    cout<<"1. Create array using User Input"<<endl;
+    cout<<"2. Create array using Random Input"<<endl;
 
-     int input = 0;
-    cout << "Your array filling option selection number: ";
-    cin >> input;
-    const auto choice = static_cast<userInput>(input);
-    cout << "\n";
 
-int** array = nullptr;
+    cin>>opt;
 
-  switch(choice)
-    {
-        case userInput::USER_INPUT:
-        {
-            array = getUserArray(rows, columns);
-            
-            break;
-        }
-    }  
-    cout << "initial array:" << "\n" << "\n";
-            
-    printArray(array, rows, columns);
-            
-return 0;
+    cout<<"Enter number of Rows, n: ";
+    cin>>n;
+    cout<<"Enter number of Columns, m: ";
+    cin>>m;
 
-}
-size_t get_size(const string& message)
-{
-    size_t size;
-    
-    cout << message;
-    cin >> size;
-
-    return static_cast<size_t>(size);
-}
-int** getArray(const size_t rows, const size_t columns)
-{
-    int** array = new int* [rows];
-    
-    for (size_t i = 0; i < rows; i++)
-    {
-        array[i] = new int[columns];
+    int **arr;
+    if(opt == 1){
+        arr = userArray(n,m);
+        printArray(arr,n,m);
     }
-    return array;
-}
-int** getUserArray(const size_t rows, const size_t columns)
-{
-    int** array = getArray(rows, columns);
-    
-    for (size_t i = 0; i < rows; i++)
-    {
-        for (size_t j = 0; j < columns; j++)
-        {
-            cin >> array[i][j];
-        }
-        cout << "\n";
-    }
-    return array;
-}
 
-void printArray(int** array, const size_t rows, const size_t  columns)
-{
-    for (size_t i = 0; i < rows; i++)
-    {
-        for (size_t j = 0; j < columns; j++)
-        {
-
-            cout << array[i][j] << "\t";
-        }
-        cout << "\n" << "\n";
+    if(opt == 2){
+        arr = randArray(n,m);
+        printArray(arr,n,m);
     }
+
+    cout<<"Array Operation"<<endl;
+    cout<<"1. Replace the element multiple of three of each column with zero."<<endl;
+    cout<<"2. Delete all rows in which the second element is larger than the penultimate one."<<endl;
+
+    cin>>opt;
+
+    if(opt == 1){
+        printArray(replaceThreeMultiples(arr,n,m),n,m);
+    }
+
+    if(opt == 2){
+        printArray(deleteRows(arr,n,m),n,m);
+    }
+
+
+
+
+
+    return 0;
 }
